@@ -1,0 +1,71 @@
+﻿@model PracticeApp.Models.Budget
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Budget</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NetSalary" class="control-label"></label>
+                <input asp-for="NetSalary" class="form-control" />
+                <span asp-validation-for="NetSalary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdditionalIncome" class="control-label"></label>
+                <input asp-for="AdditionalIncome" class="form-control" />
+                <span asp-validation-for="AdditionalIncome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalIncome" class="control-label"></label>
+                <input asp-for="TotalIncome" class="form-control" />
+                <span asp-validation-for="TotalIncome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HousingExpense" class="control-label"></label>
+                <input asp-for="HousingExpense" class="form-control" />
+                <span asp-validation-for="HousingExpense" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UtilitiesExpense" class="control-label"></label>
+                <input asp-for="UtilitiesExpense" class="form-control" />
+                <span asp-validation-for="UtilitiesExpense" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FoodExpense" class="control-label"></label>
+                <input asp-for="FoodExpense" class="form-control" />
+                <span asp-validation-for="FoodExpense" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DebtExpense" class="control-label"></label>
+                <input asp-for="DebtExpense" class="form-control" />
+                <span asp-validation-for="DebtExpense" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdditionalExpense" class="control-label"></label>
+                <input asp-for="AdditionalExpense" class="form-control" />
+                <span asp-validation-for="AdditionalExpense" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalExpenses" class="control-label"></label>
+                <input asp-for="TotalExpenses" class="form-control" />
+                <span asp-validation-for="TotalExpenses" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Priority" asp-action="PriorityPath">Back to Flowchart</a>
+</div>
+

@@ -1,0 +1,556 @@
+﻿
+@{
+    ViewData["Title"] = "PriorityPath";
+}
+<div class="text-lg-center">
+    <h1>PriorityPath</h1>
+</div>
+<div id="FinFlowchart" style="width: 1800px; height: 1400px; background-color: #FFFFFF; margin: auto;">
+
+</div>
+<script>
+    var Step0Color = "#7E7E7E"
+    var Step1Color = "#c61236"
+    var Step2Color = "#FACA0F"
+    var Step3Color = "#00cc00"
+    var Step4Color = "#58cced"
+    var Step5Color = "#104a8e"
+    var Step6Color = "#663a82"
+    var $ = go.GraphObject.make;
+
+    var myDiagram =
+        $(go.Diagram, "FinFlowchart",  // must be the ID or reference to div
+            {
+                initialAutoScale: go.Diagram.UniformToFill,
+                layout: $(go.TreeLayout, { angle: 90, setsPortSpot: false, setsChildPortSpot: false })
+            });
+
+    myDiagram.groupTemplate =
+        $(go.Group, "Auto",
+            {
+                layout: $(go.TreeLayout,
+                    { angle: 0, arrangement: go.TreeLayout.ArrangementHorizontal, isRealtime: false, setsPortSpot: false, setsChildPortSpot: false }),
+            },
+            $(go.Panel, "Auto",
+                $(go.Shape, "Rectangle", { fill: "transparent", strokeWidth: 0 }),
+                $(go.Placeholder,
+                    {
+                        margin: 10,
+                        background: "transparent"
+                    }
+                )
+            )
+         );
+
+    myDiagram.nodeTemplate =
+        $(go.Node, "Auto",
+            new go.Binding("click", "click"),
+            $(go.Shape, "RoundedRectangle", new go.Binding("stroke", "Color"), { fill: "#ECECEC", strokeWidth: 3 }),
+            $(go.Panel, "Vertical",
+                $(go.TextBlock, "",
+                    {
+                        width: 200,
+                        margin: 12,
+                        stroke: "Black",
+                        font: "bold 14px sans-serif",
+                        textAlign: "center",
+                        wrap: go.TextBlock.WrapFit
+                    },
+                    new go.Binding("text", "Header")
+                ),
+
+                $(go.TextBlock, "",
+                    {
+                        width: 200,
+                        margin: 12,
+                        stroke: "Black",
+                        font: "12px sans-serif",
+                        wrap: go.TextBlock.WrapFit,
+                        textAlign: "center"
+                    },
+                    new go.Binding("text", "Text")
+                )
+            )
+        );
+
+    myDiagram.linkTemplate =
+        $(go.Link,
+            { routing: go.Link.AvoidsNodes },
+            new go.Binding("fromSpot", "fromSpot", go.Spot.parse),
+            new go.Binding("toSpot", "toSpot", go.Spot.parse),
+            $(go.Shape),
+            $(go.Shape, { toArrow: "Standard" }),
+            $(go.TextBlock, new go.Binding("text", "text"),
+                {
+                    segmentIndex: 0, segmentOffset: new go.Point(NaN, NaN),
+                    segmentOrientation: go.Link.OrientUpright
+                }),
+            //$(go.Panel, "Auto",  // this whole Panel is a link label
+            //    $(go.Shape, "Rectangle", { fill: "yellow", stroke: "gray" }),
+            //    $(go.TextBlock, { margin: 3 },
+            //        new go.Binding("text", "text")))
+        );
+
+    var nodeDataArray = [ // for each object in this Array, the Diagram creates a Node to represent it
+        {
+            key: 1,
+            isGroup: true
+        },
+        {
+            key: 2,
+            Color: Step0Color,
+            Header: "Create A Budget",
+            Text: "Fundamental to a sound financial footing is knowing where your money is going, budgeting helps you see your sources of income less your expenses.",
+            group: 1,
+            click: function (e) {
+                //var id = model.Id; //if you want to pass an Id parameter
+                window.location.href = '@Url.Action("Create", "Budget")/' // + id;
+            }
+        },
+        {
+            key: 3,
+            isGroup: true
+        },
+        {
+            key: 4,
+            Color: Step0Color,
+            Header: "Pay Rent/Mortgage",
+            Text: "Including renters/homeowners insurance, if required.",
+            group: 3
+        },
+        {
+            key: 5,
+            Color: Step0Color,
+            Header: "Buy Food/Groceries",
+            Text: "Depending of the severity of your situation and needs, you may wish to prioritize utilities before this step.",
+            group: 3
+        },
+        {
+            key: 6,
+            Color: Step0Color,
+            Header: "Pay Essential Items/Utilities",
+            Text: "Power, water, heat, toiletries, etc.",
+            group: 3
+        },
+        {
+            key: 7,
+            Color: Step0Color,
+            Header: "Pay Income Earning Expenses",
+            Text: "Necessary transportation expenses, possibly Internet, phone, anything required for your job.",
+            group: 3
+        },
+        {
+            key: 8,
+            isGroup: true
+        },
+        {
+            key: 9,
+            Color: Step0Color,
+            Header: "Pay Health Care",
+            Text: "Health Insurance and health care expenses.",
+            group: 8
+        },
+        {
+            key: 10,
+            Color: Step0Color,
+            Header: "Make Minimum Payments On All Debt/Loans",
+            Text: "Student loans, credit cards, etc.",
+            group: 8
+        },
+        {
+            key: 11,
+            Color: Step1Color,
+            Header: "Build A Small Emergency Fund",
+            Text: "Either $1000 or one month worth of expenses, whichever is greater; use a savings account.",
+            group: 8
+        },
+        {
+            key: 12,
+            Color: Step1Color,
+            Header: "Pay Any Non-Essential Bills in Full",
+            Text: "Cable, Internet, phone, etc.",
+            group: 8
+        },
+        {
+            key: 13,
+            isGroup: true
+        },
+        {
+            key: 14,
+            Color: Step2Color,
+            Header: "Does your employer offer a retirement account with an employer match?",
+            group: 13
+        },
+        {
+            key: 15,
+            Color: Step2Color,
+            Header: "Contribute the amount needed to get the full employer match, but nothing above that amount.",
+            group: 13
+        },
+        {
+            key: 16,
+            isGroup: true
+        },
+        {
+            key: 17,
+            Color: Step3Color,
+            Header: "Do you have any high interest debt?",
+            Text: "Debt with an interest rate of 10% or higher",
+            group: 16
+        },
+        {
+            key: 18,
+            Color: Step3Color,
+            Header: "Evaluate the merits of the 'Avalanche' and 'Snowball' methods and thier advantages in your personal financial situation and apply accordingly until these debts are paid off.",
+            group: 16
+        },
+        {
+            key: 19,
+            isGroup: true
+        },
+        {
+            key: 20,
+            Color: Step1Color,
+            Header: "Increase Emergency Fund to 3-6 Months Living Expenses",
+            Text: "Use a Savings account",
+            group: 19
+        },
+        {
+            key: 21,
+            Color: Step3Color,
+            Header: "Do you have any moderate interest debt?",
+            Text: "Any remaining debt between 4% and 9% interest rate, excluding mortgage.",
+            group: 19
+        },
+        {
+            key: 22,
+            Color: Step3Color,
+            Header: "Evaluate the merits of the 'Avalanche' and 'Snowball' methods and thier advantages in your personal financial situation and apply accordingly until these debts are paid off.",
+            group: 19
+        },
+        {
+            key: 23,
+            isGroup: true
+        },
+        {
+            key: 24,
+            Color: Step4Color,
+            Header: "Evaluate the merits of a Roth vs. Traditional IRA in the context of your personal financial situation and max the yearly contributions accordingly.",
+            group: 23
+        },
+        {
+            key: 25,
+            Color: Step4Color,
+            Header: "Are you expecting any large, REQUIRED purchases or personal investments in the near future?",
+            Text: "College, professional certifications, a car to get to work, etc.",
+            group: 23
+        },
+        {
+            key: 26,
+            Color: Step4Color,
+            Header: "Save the amount needed for these expenses in a savings or checking account.",
+            group: 23
+        },
+        {
+            key: 27,
+            isGroup: true
+        },
+        {
+            key: 28,
+            Color: Step5Color,
+            Header: "Are you currently saving at least 15% of your pre-tax income for retirement?",
+            Text: "Total contributions to all retirement accounts; note that you may need to save more if you are behind on retirement savings.",
+            group: 27
+        },
+        {
+            key: 29,
+            isGroup: true
+        },
+        {
+            key: 30,
+            Color: Step5Color,
+            Header: "Does your employer offer a 401(k), 403(b), or similar retirement plan into which you could save more money?",
+            group: 29
+        },
+        {
+            key: 31,
+            Color: Step5Color,
+            Header: "Increase contributions until you have reached 15% pre-tax income being saved for retirement",
+            group: 29
+        },
+        {
+            key: 32,
+            isGroup: true
+        },
+        {
+            key: 33,
+            Color: Step5Color,
+            Header: "If self-employed, contribute to an Individual 401(k), SEP-IRA, or SIMPLE IRA to reach 15% pre-tax income saved; if not self-employed, contribute to a taxable account to reach this goal.",
+            group: 32
+        },
+        {
+            key: 34,
+            isGroup: true
+        },
+        {
+            key: 35,
+            Color: Step6Color,
+            Header: "Do you have a qualified high-deductible health plan and are eligible for an investible HSA?",
+            group: 34
+        },
+        {
+            key: 36,
+            Color: Step6Color,
+            Header: "Max yearly HSA contributions",
+            group: 34
+        },
+        {
+            key: 37,
+            isGroup: true
+        },
+        {
+            key: 38,
+            Color: Step6Color,
+            Header: "Do you have children and wish to help pay for some or all of their college expenses?",
+            group: 37
+        },
+        {
+            key: 39,
+            Color: Step6Color,
+            Header: "Evaluate available savings/investment options, such as a 529 plan, and contribute accordingly.",
+            group: 37
+        },
+        {
+            key: 40,
+            isGroup: true
+        },
+        {
+            key: 41,
+            Color: Step6Color,
+            Header: "At this point, you have some options on how to proceed, and it is completely up to you and your personal goals and desires",
+            group: 40
+        },
+        {
+            key: 42,
+            isGroup: true
+        },
+        {
+            key: 43,
+            Color: Step6Color,
+            Header: "Would you like to retire early?",
+            Text: "Max out 401(k), 403(b), or other employer sponsored account, consider the 'mega backdoor Roth IRA', then use a taxable account.",
+            group: 42
+        },
+        {
+            key: 44,
+            Color: Step6Color,
+            Header: "Do you have more immediate goals?",
+            Text: "Use savings for goals sooner than 3-5 years, a conservative mix of stocks and bonds for goals more than 3-5 years away. Examples include downpayment for homes, new vehicles, paying down morgage, vacation, etc.",
+            group: 42
+        }
+    ];
+    var linkDataArray = [
+        {
+            from: 2,
+            to: 4,
+            fromSpot: "BottomSide",
+            toSpot: "TopSide"
+        },
+        {
+            from: 4,
+            to: 5
+        },
+        {
+            from: 5,
+            to: 6
+        },
+        {
+            from: 6,
+            to: 7
+        },
+        {
+            from: 7,
+            to: 9,
+            fromSpot: "BottomSide",
+            toSpot: "TopSide"
+        },
+        {
+            from: 9,
+            to: 10
+        },
+        {
+            from: 10,
+            to: 11
+        },
+        {
+            from: 11,
+            to: 12
+        },
+        {
+            from: 12,
+            to: 14,
+            fromSpot: "BottomSide",
+            toSpot: "TopSide"
+        },
+        {
+            from: 14,
+            to: 15,
+            text: "Yes"
+        },
+        {
+            from: 14,
+            to: 17,
+            text: "No",
+            fromSpot: "LeftSide",
+            toSpot: "TopSide"
+        },
+        {
+            from: 15,
+            to: 17,
+            fromSpot: "BottomSide",
+            toSpot: "TopSide"
+        },
+        {
+            from: 17,
+            to: 18,
+            text: "Yes"
+        },
+        {
+            from: 17,
+            to: 20,
+            text: "No",
+            fromSpot: "LeftSide",
+            toSpot: "LeftSide"
+        },
+        {
+            from: 18,
+            to: 17,
+            fromSpot: "LeftSide",
+            toSpot: "RightSide"
+        },
+        {
+            from: 20,
+            to: 21
+        },
+        {
+            from: 21,
+            to: 22,
+            text: "Yes"
+        },
+        {
+            from: 21,
+            to: 24,
+            text: "No",
+            fromSpot: "BottomSide",
+            toSpot: "TopSide"
+        },
+        {
+            from: 22,
+            to: 21
+        },
+        {
+            from: 24,
+            to: 25
+        },
+        {
+            from: 25,
+            to: 26,
+            text: "Yes"
+        },
+        {
+            from: 25,
+            to: 28,
+            text: "No",
+            fromSpot: "BottomSide",
+            toSpot: "TopSide"
+        },
+        {
+            from: 26,
+            to: 28,
+            fromSpot: "BottomSide",
+            toSpot: "TopSide"
+        },
+        {
+            from: 28,
+            to: 30,
+            text: "No",
+            fromSpot: "LeftSide",
+            toSpot: "TopSide"
+        },
+        {
+            from: 28,
+            to: 35,
+            text: "Yes",
+            fromSpot: "RightSide",
+            toSpot: "TopSide"
+        },
+        {
+            from: 30,
+            to: 31,
+            text: "Yes",
+            fromSpot: "RightSide",
+            toSpot: "LeftSide"
+        },
+        {
+            from: 30,
+            to: 33,
+            text: "No",
+            fromSpot: "LeftSide",
+            toSpot: "LeftSide"
+        },
+        {
+            from: 31,
+            to: 28,
+            fromSpot: "TopSide",
+            toSpot: "BottomSide"
+        },
+        {
+            from: 33,
+            to: 28,
+            fromSpot: "RightSide",
+            toSpot: "BottomSide"
+        },
+        {
+            from: 35,
+            to: 36,
+            text: "Yes"
+        },
+        {
+            from: 35,
+            to: 38,
+            text: "No"
+        },
+        {
+            from: 36,
+            to: 38,
+            fromSpot: "BottomSide",
+            toSpot: "TopSide"
+        },
+        {
+            from: 38,
+            to: 39,
+            text: "Yes"
+        },
+        {
+            from: 38,
+            to: 41,
+            text: "No"
+        },
+        {
+            from: 39,
+            to: 41
+        },
+        {
+            from: 41,
+            to: 43
+        },
+        {
+            from: 41,
+            to: 44
+        }
+    ];
+
+    myDiagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
+    myDiagram.isReadOnly = true;
+</script>
+
