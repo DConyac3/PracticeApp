@@ -45,10 +45,10 @@ namespace PracticeApp.Controllers
                 return NotFound();
             }
             var user = await _userManager.GetUserAsync(User);
-            if (budget.User != user)
-            {
-                return NotFound();
-            }
+            //if (budget.User != user)
+            //{
+            //    return NotFound();
+            //}
 
             return View(budget);
         }
@@ -69,7 +69,7 @@ namespace PracticeApp.Controllers
             if (ModelState.IsValid)
             {
                 budget.Id = Guid.NewGuid().ToString();
-                budget.User = await _userManager.GetUserAsync(User);
+                //budget.User = await _userManager.GetUserAsync(User);
                 _context.Add(budget);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Details), new { budget.Id });
@@ -91,10 +91,10 @@ namespace PracticeApp.Controllers
                 return NotFound();
             }
             var user = await _userManager.GetUserAsync(User);
-            if (budget.User != user)
-            {
-                return NotFound();
-            }
+            //if (budget.User != user)
+            //{
+            //    return NotFound();
+            //}
             return View(budget);
         }
 
@@ -149,10 +149,10 @@ namespace PracticeApp.Controllers
             }
 
             var user = await _userManager.GetUserAsync(User);
-            if (budget.User != user)
-            {
-                return NotFound();
-            }
+            //if (budget.User != user)
+            //{
+            //    return NotFound();
+            //}
 
             return View(budget);
         }

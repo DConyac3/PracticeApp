@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PracticeApp.Data;
 
-namespace PracticeApp.Data.Migrations
+namespace PracticeApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -16,7 +16,7 @@ namespace PracticeApp.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "3.0.0")
+                .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -217,6 +217,43 @@ namespace PracticeApp.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("PracticeApp.Models.Budget", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("AdditionalExpense")
+                        .HasColumnType("float");
+
+                    b.Property<double>("AdditionalIncome")
+                        .HasColumnType("float");
+
+                    b.Property<double>("DebtExpense")
+                        .HasColumnType("float");
+
+                    b.Property<double>("FoodExpense")
+                        .HasColumnType("float");
+
+                    b.Property<double>("HousingExpense")
+                        .HasColumnType("float");
+
+                    b.Property<double>("NetSalary")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TotalExpenses")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TotalIncome")
+                        .HasColumnType("float");
+
+                    b.Property<double>("UtilitiesExpense")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Budget");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

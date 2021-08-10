@@ -13,7 +13,7 @@ namespace PracticeApp.Models
     {
         [Key]
         public string Id { get; set; }
-        public IdentityUser User { get; set; }
+        //public IdentityUser User { get; set; }
         public double NetSalary { get; set; }
         public double AdditionalIncome { get; set; }
         public double TotalIncome { get; set; }
