@@ -13,15 +13,34 @@ namespace PracticeApp.Models
     {
         [Key]
         public string Id { get; set; }
-        //public IdentityUser User { get; set; }
-        public double NetSalary { get; set; }
-        public double AdditionalIncome { get; set; }
-        public double TotalIncome { get; set; }
-        public double HousingExpense { get; set; }
-        public double UtilitiesExpense { get; set; }
-        public double FoodExpense { get; set; }
-        public double DebtExpense { get; set; }
-        public double AdditionalExpense { get; set; }
-        public double TotalExpenses { get; set; }
+        [ForeignKey("UserId")]
+        public IdentityUser User { get; set; }
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
+        public Decimal NetSalary { get; set; }
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
+        public Decimal AdditionalIncome { get; set; }
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
+        public Decimal TotalIncome { get; set; }
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
+        public Decimal HousingExpense { get; set; }
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
+        public Decimal UtilitiesExpense { get; set; }
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
+        public Decimal FoodExpense { get; set; }
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
+        public Decimal DebtExpense { get; set; }
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
+        public Decimal AdditionalExpense { get; set; }
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
+        public Decimal TotalExpenses { get; set; }
     }
 }
