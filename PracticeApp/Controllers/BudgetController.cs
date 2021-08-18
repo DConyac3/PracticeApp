@@ -64,7 +64,7 @@ namespace PracticeApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,User,NetSalary,AdditionalIncome,TotalIncome,HousingExpense,UtilitiesExpense,FoodExpense,DebtExpense,AdditionalExpense,TotalExpenses")] Budget budget)
+        public async Task<IActionResult> Create([Bind("Id,User,GrossSalary,NetSalary,AdditionalIncome,TotalIncome,HousingExpense,UtilitiesExpense,FoodExpense,DebtExpense,AdditionalExpense,TotalExpenses")] Budget budget)
         {
             if (ModelState.IsValid)
             {
@@ -103,7 +103,7 @@ namespace PracticeApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,User,NetSalary,AdditionalIncome,TotalIncome,HousingExpense,UtilitiesExpense,FoodExpense,DebtExpense,AdditionalExpense,TotalExpenses")] Budget budget)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,User,GrossSalary,NetSalary,AdditionalIncome,TotalIncome,HousingExpense,UtilitiesExpense,FoodExpense,DebtExpense,AdditionalExpense,TotalExpenses")] Budget budget)
         {
             if (id == null)
             {
